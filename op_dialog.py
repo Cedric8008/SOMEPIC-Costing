@@ -211,26 +211,6 @@ class OperationDialog(QtWidgets.QDialog):
         # Optionnel si ton code utilise self.tools :
         self.tools = [get_tool(name) for name in tool_names]
 
-
-    # ------------------------------------------------------------------
-    # Quand l'utilisateur change d'outil dans la combo
-    # ------------------------------------------------------------------
-    def on_tool_changed(self, index):
-        """Quand l'utilisateur change d'outil dans la combo."""
-        if not hasattr(self, "tools"):
-            return
-        if index < 0 or index >= len(self.tools):
-            return
-
-        tool = self.tools[index]
-
-        # Adapte les noms des champs selon ton code :
-        # Ø (mm), Z dents, Vc, Fz
-        self.ed_diam.setText(f"{tool['diam']:.3f}")
-        self.ed_z_teeth.setText(str(tool["z_teeth"]))
-        self.ed_vc.setText(f"{tool['vc']:.1f}")
-        self.ed_fz.setText(f"{tool['fz']:.3f}")
-
     
     # ------------------------------------------------------------
     # Lecture des faces FreeCAD sélectionnées
@@ -476,6 +456,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
