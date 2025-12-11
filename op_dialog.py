@@ -8,13 +8,6 @@ import os
 import csv
 from machining_tools import get_all_tool_names, get_tool
 
-tool_names = get_all_tool_names()
-self.cmb_tool.addItems(tool_names)
-
-self.tools = [get_tool(name) for name in tool_names]
-
-TOOLS_CSV = "tools.csv"
-
 
 # ---------------------------------------------------------------------------
 # Gestion de la bibliothèque d'outils (tools.csv)
@@ -456,6 +449,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
