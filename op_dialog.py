@@ -241,17 +241,24 @@ class OperationDialog(QtWidgets.QDialog):
     # ------------------------------------------------------------
     # Mise à jour des champs quand on change d’outil
     # ------------------------------------------------------------
-    def _on_tool_change(self):
-        """Remplit les champs Ø, Z dents, Vc, Fz."""
-        idx = self.cmb_tool.currentIndex()
-        if idx < 0:
-            return
+   def _on_tool_change(self):
+    """Load tool parameters into the UI when selection changes."""
+    name = self.cmb_tool.currentText()
+    if not name:
+        return
 
-      
-        self.ed_diam.setText(str(tool.diam))
-        self.ed_z.setText(str(tool.z_teeth))
-        self.ed_vc.setText(str(tool.vc))
-        self.ed_fz.setText(str(tool.fz))
+    from machining_tools import get_tool
+
+    tool = get_tool(name)
+    if not tool:
+        return
+
+    # Fill UI fields
+    self.diam_edit.setText(str(tool["Diam"]))
+    self.z_edit.setText(str(tool["Z"]))
+    self.vc_edit.setText(str(tool["Vc"]))
+    self.fz_edit.setText(str(tool["Fz"]))
+
 
     # ------------------------------------------------------------
     # Lecture des faces FreeCAD sélectionnées
@@ -497,3 +504,4 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
