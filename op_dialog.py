@@ -4,9 +4,14 @@ import FreeCADGui
 import Part
 from PySide2 import QtWidgets, QtCore
 
-import machining
 import os
 import csv
+from machining_tools import get_all_tool_names, get_tool
+
+tool_names = get_all_tool_names()
+self.cmb_tool.addItems(tool_names)
+
+self.tools = [get_tool(name) for name in tool_names]
 
 TOOLS_CSV = "tools.csv"
 
@@ -198,24 +203,14 @@ class OperationDialog(QtWidgets.QDialog):
         lay_bottom.addWidget(self.btn_cancel)
 
         # CHARGE LES OUTILS
-        self._load_tools()
+        from machining_tools import get_all_tool_names, get_tool
 
-        # ------------------------------------------------------------------
-        # Chargement des outils depuis tools.csv
-        # ------------------------------------------------------------------
-        def _load_tools(self):
-            """Charge la bibliothèque d'outils et remplit la combo."""
-            self.tools = load_tool_library()
+        tool_names = get_all_tool_names()
+        self.cmb_tool.addItems(tool_names)
 
-            # Combo des outils : adapte le nom du widget à ton code
-            # (cb_tool, cmb_tool, self.cb_outil, etc.)
-            combo = self.cb_tool  # <= change si ton widget a un autre nom
+        # Optionnel si ton code utilise self.tools :
+        self.tools = [get_tool(name) for name in tool_names]
 
-            combo.clear()
-            for t in self.tools:
-                combo.addItem(t["name"])
-
-            combo.currentIndexChanged.connect(self.on_tool_changed)
 
     # ------------------------------------------------------------------
     # Quand l'utilisateur change d'outil dans la combo
@@ -237,26 +232,6 @@ class OperationDialog(QtWidgets.QDialog):
         self.ed_fz.setText(f"{tool['fz']:.3f}")
 
     
-    # ------------------------------------------------------------
-    # Mise à jour des champs quand on change d’outil
-    # ------------------------------------------------------------
-    def _on_tool_change(self):
-        """Load tool parameters into the UI when selection changes."""
-        name = self.cmb_tool.currentText()
-        if not name:
-            return
-
-        from machining_tools import get_tool
-        tool = get_tool(name)
-        if not tool:
-            return
-
-        # Remplissage des champs
-        self.ed_diam.setText(str(tool["Diam"]))
-        self.ed_z_teeth.setText(str(tool["Z"]))
-        self.ed_vc.setText(str(tool["Vc"]))
-        self.ed_fz.setText(str(tool["Fz"]))
-
     # ------------------------------------------------------------
     # Lecture des faces FreeCAD sélectionnées
     # ------------------------------------------------------------
@@ -501,6 +476,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
