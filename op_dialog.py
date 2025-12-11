@@ -108,7 +108,7 @@ class OperationDialog(QtWidgets.QDialog):
         lay_tool = QtWidgets.QGridLayout(box_tool)
 
         self.cmb_tool = QtWidgets.QComboBox()
-        self.cmb_tool.currentIndexChanged.connect(self._on_tool_change)
+        self.cmb_tool.currentIndexChanged.connect(self._on_tool_changed)
         lay_tool.addWidget(QtWidgets.QLabel("Bibliothèque outil :"), 0, 0)
         lay_tool.addWidget(self.cmb_tool, 0, 1)
 
@@ -204,7 +204,24 @@ class OperationDialog(QtWidgets.QDialog):
         # Optionnel si ton code utilise self.tools :
         self.tools = [get_tool(name) for name in tool_names]
 
-    
+    # ------------------------------------------------------------------
+    # Quand l'utilisateur change d'outil dans la combo
+    # ------------------------------------------------------------------
+    def on_tool_changed(self, index):
+        """Met à jour les champs de coupe selon l'outil choisi."""
+        if not hasattr(self, "tools"):
+            return
+        if index < 0 or index >= len(self.tools):
+            return
+
+        tool = self.tools[index]
+
+        # Remplissage des champs Ø, Z, Vc, Fz
+        self.ed_diam.setText(f"{tool['diam']:.3f}")
+        self.ed_z.setText(str(tool["z_teeth"]))
+        self.ed_vc.setText(f"{tool['vc']:.1f}")
+        self.ed_fz.setText(f"{tool['fz']:.3f}")
+
     # ------------------------------------------------------------
     # Lecture des faces FreeCAD sélectionnées
     # ------------------------------------------------------------
@@ -449,6 +466,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
