@@ -8,8 +8,6 @@ import machining
 import os
 import csv
 
-import machining
-
 TOOLS_CSV = "tools.csv"
 
 
@@ -503,6 +501,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
