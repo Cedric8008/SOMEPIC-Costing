@@ -108,7 +108,7 @@ class OperationDialog(QtWidgets.QDialog):
         lay_tool = QtWidgets.QGridLayout(box_tool)
 
         self.cmb_tool = QtWidgets.QComboBox()
-        self.cmb_tool.currentIndexChanged.connect(self._on_tool_changed)
+        self.cmb_tool.currentIndexChanged.connect(self.on_tool_changed)
         lay_tool.addWidget(QtWidgets.QLabel("Bibliothèque outil :"), 0, 0)
         lay_tool.addWidget(self.cmb_tool, 0, 1)
 
@@ -466,6 +466,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
