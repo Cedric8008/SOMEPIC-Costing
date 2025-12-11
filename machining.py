@@ -4,7 +4,7 @@ machining.py — Moteur de calcul corrigé et unifié pour le module PartCosting
 """
 
 import math
-from machining_tools import ToolLibrary
+from machining_tools
 
 
 # ----------------------------------------------------------
@@ -97,4 +97,5 @@ def compute_pocket_time(surface_mm2, depth_total, ap_max, xy_surplus, ae_mm, vf_
     time_min = (length_equiv * passes_z * passes_rad) / vf_mm_min
 
     return time_min, passes_z, passes_rad
+
 
