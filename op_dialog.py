@@ -218,7 +218,7 @@ class OperationDialog(QtWidgets.QDialog):
 
         # Remplissage des champs Ø, Z, Vc, Fz
         self.ed_diam.setText(f"{tool['diam']:.3f}")
-        self.ed_z.setText(str(tool["z_teeth"]))
+        self.ed_z.setText(str(tool["z"]))
         self.ed_vc.setText(f"{tool['vc']:.1f}")
         self.ed_fz.setText(f"{tool['fz']:.3f}")
 
@@ -466,6 +466,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
