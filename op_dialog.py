@@ -379,15 +379,29 @@ class OperationDialog(QtWidgets.QDialog):
             QtWidgets.QMessageBox.warning(self, "Erreur", "Paramètres outil invalides.")
             return
 
-        # Conditions coupe
+               # Conditions coupe
+        # Ae% et Ap sont obligatoires, Z+ et XY optionnels
         try:
             ae_pct = float(self.ed_ae_percent.text())
             ap_max = float(self.ed_ap.text())
-            z_plus = float(self.ed_z_plus.text())
-            xy_surplus = float(self.ed_xy_surplus.text())
-        except:
-            QtWidgets.QMessageBox.warning(self, "Erreur", "Paramètres coupe invalides.")
+        except Exception:
+            QtWidgets.QMessageBox.warning(self, "Erreur", "Paramètres coupe invalides (Ae% ou Ap).")
             return
+
+        # Surépaisseur Z+ brut (optionnelle)
+        txt_z_plus = self.ed_z_plus.text().strip()
+        try:
+            z_plus = float(txt_z_plus) if txt_z_plus else 0.0
+        except Exception:
+            z_plus = 0.0
+
+        # Surépaisseur XY brut (optionnelle)
+        txt_xy = self.ed_xy_surplus.text().strip()
+        try:
+            xy_surplus = float(txt_xy) if txt_xy else 0.0
+        except Exception:
+            xy_surplus = 0.0
+
 
         # Calcul Ae réel
         ae_mm = (ae_pct / 100.0) * diam
@@ -466,6 +480,7 @@ class OperationDialog(QtWidgets.QDialog):
                 f"(Surf={area:.0f}mm², L≈{L_equiv:.0f}mm, Z={passes_z}, Rad={passes_rad})"
             )
             return
+
 
 
 
